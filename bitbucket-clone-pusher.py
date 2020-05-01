@@ -37,12 +37,12 @@ bitbucket_base_url = f"{bitbucket_server_url}/rest/api/1.0/projects/{bitbucket_p
 auth_headers = {'Authorization': f'Bearer {personal_access_token}',
                 'Content-Type': 'application/json'}
 
-response = requests.get(bitbucket_base_url, headers=auth_headers)
+response = requests.get(bitbucket_base_url + '?limit=100', headers=auth_headers)
 
 js = json.loads(response.content.decode('utf-8'))
 
 # Loop through each repo in the block
-for value in js['values'][2:]:
+for value in js['values']:
     new_base_url = f"{bitbucket_base_url}/{value['name']}"
     new_response = requests.get(new_base_url, headers=auth_headers)
 
